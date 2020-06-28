@@ -2,6 +2,7 @@ import { getRepository} from "typeorm";
 import User from "../models/User";
 import { compare } from "bcryptjs";
 import { sign,verify } from "jsonwebtoken";
+import authConfig from "../config/auth";
 
 interface Request{
     email:string,
@@ -28,12 +29,15 @@ export default class AuthenticateUserService{
         if(!passwordMatched){
             throw new Error("incorrect email/password combination.")
         }
+
+
+        const {secret,expiresIn}=authConfig.jwt
         //1. argument:permission von user oder name (eher nicht email und ganz sicher nicht password)
         //2. argument: Schlüssel (hier könnte man gut schlössel machen: https://www.md5online.org/)
          //3. argument: configurationen
-        const token=sign({},"7f046bee5690b8cb273566102a28b4a9",{
+        const token=sign({},secret,{
             subject: user.id, //id von user
-            expiresIn: "1d", //man bleibt 1 Tag eingelogt
+            expiresIn:expiresIn, //man bleibt 1 Tag eingelogt
         })
 
         return {
