@@ -3,6 +3,7 @@ import User from "../models/User";
 import path from "path"
 import uploadConfig from "../config/upload";
 import fs from "fs"//node file system
+import AppError from "../errors/AppError";
 
 interface Request{
     user_id:string,
@@ -15,7 +16,7 @@ export default class UpdateUserAvatarService{
             const userRepository=getRepository(User)
             const user=await userRepository.findOne(user_id)
             if(!user){
-                throw new Error("only authenticated user can change Avatar.")
+                throw new AppError("only authenticated user can change Avatar.",401)
             }
             if(user.avatar){
                 const userAvatarFilePath=path.join(uploadConfig.directory, user.avatar)

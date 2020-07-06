@@ -25,15 +25,11 @@ appointmentsRouter.use(ensureAuthenticated)
 
  //hier: localhost:3333/appointments/
 appointmentsRouter.post("/", async  (req,res) => {
-    try{
     const {provider_id,date:datea}=req.body;
     const parsedaDate=parseISO(datea)
     const createAppointment=new CreateAppointmentService()
 const appointment=await createAppointment.execute({date:parsedaDate,provider_id})
         return res.json(appointment)
-}catch(e){
-    console.log(e)
-    return res.status(400).json({"error":e.message})
-}})
+})
 
  export default appointmentsRouter

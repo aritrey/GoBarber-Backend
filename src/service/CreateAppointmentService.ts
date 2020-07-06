@@ -2,6 +2,7 @@ import  Appointment from "../models/Appointment"
 import { startOfHour } from "date-fns";
 import AppointmentsRepository from "../repository/AppointmentsRepository";
 import {getCustomRepository} from "typeorm"
+import AppError from "../errors/AppError";
 
 
 interface RequestDTO{
@@ -18,7 +19,7 @@ class CreateAppointmentService{
     const appointmentDate = startOfHour(date);//das gehört mit zu regra de negocio (was die app macht und nicht wie sie die daten braucht)
     const findSameDateAppointment= await appointmentsRepository.findByDate(appointmentDate)
     if( findSameDateAppointment){
-        throw Error("This Appointment is already booked.")
+        throw new AppError("This Appointment is already booked.")
     }
     const appointment=appointmentsRepository.create({provider_id,date:appointmentDate})
     await appointmentsRepository.save(appointment)    

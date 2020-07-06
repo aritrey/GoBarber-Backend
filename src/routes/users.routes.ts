@@ -12,28 +12,23 @@ import UpdateUserAvatarService from "../service/UpdateUserAvatarService";
 const upload=multer(uploadConfig)
 
 usersRouter.post("/", async  (req,res) => {
-    try{
+ 
         const {name,email,password}=req.body
         const createUser=new CreateUserService()
         const user=await createUser.execute({name,email,password})
        delete user.password
     return res.json(user)
-}catch(e){
-    return res.status(400).json({"error":e.message})
-}})
+})
 
 
 usersRouter.patch("/avatar",ensureAuthenticated, upload.single("avatar"),async  (req,res) => {
-console.log(req.file)
-try{
+
 const updateUserAvatar= new UpdateUserAvatarService()
 
 
 const user= await updateUserAvatar.execute({user_id:req.user.id,avatarFilename:req.file.filename})
     return res.json(user)
-}catch(e){
-    return res.status(400).json({"error":e.message})
-}
+
 })
 
  export default usersRouter
