@@ -1,32 +1,33 @@
-import { uuid } from "uuidv4"
-import { Entity,Column,PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn } from "typeorm"//model das in db gespeichert wird
-//primary key:PrimaryGeneratedColumn
+import {
+    Entity,
+    Column,
+    PrimaryGeneratedColumn,
+    CreateDateColumn,
+    UpdateDateColumn,
+} from "typeorm";
 
-@Entity("users")//die klasse 
+@Entity("users")
 class User {
     @PrimaryGeneratedColumn("uuid")
-    id:string;
+    id: string;
 
     @Column()
-    name:string;
-    
-    @Column()
-    email:string;
-    
-    @Column()
-    password:string;
+    name: string;
 
     @Column()
-    avatar:string;
+    email: string;
 
+    @Column()
+    password: string;
+
+    @Column()
+    avatar: string;
 
     @CreateDateColumn()
-    created_at:Date;
+    created_at: Date;
 
     @UpdateDateColumn()
-   updated_at:Date;
-
-  
+    updated_at: Date;
 }
 
-export default User
+export default User;

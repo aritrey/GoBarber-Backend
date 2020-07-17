@@ -1,30 +1,35 @@
-import { uuid } from "uuidv4"
-import { Entity,Column,PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from "typeorm"//model das in db gespeichert wird
+import { uuid } from "uuidv4";
+import {
+    Entity,
+    Column,
+    PrimaryGeneratedColumn,
+    CreateDateColumn,
+    UpdateDateColumn,
+    ManyToOne,
+    JoinColumn,
+} from "typeorm";
 import User from "./User";
-//primary key:PrimaryGeneratedColumn
 
-@Entity("appointments")//die klasse 
+@Entity("appointments")
 class Appointment {
     @PrimaryGeneratedColumn("uuid")
-    id:string;
+    id: string;
 
     @Column()
-    provider_id:string;
+    provider_id: string;
 
-    @ManyToOne(()=>User)
-    @JoinColumn({name:"provider_id"})
-    provider:User//für foreign key 
+    @ManyToOne(() => User)
+    @JoinColumn({ name: "provider_id" })
+    provider: User; //for foreign key
 
     @Column("timestamp with time zone")
-    date:Date;
+    date: Date;
 
     @CreateDateColumn()
-    created_at:Date;
+    created_at: Date;
 
     @UpdateDateColumn()
-   updated_at:Date;
-
-  
+    updated_at: Date;
 }
 
-export default Appointment
+export default Appointment;
